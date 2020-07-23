@@ -1,16 +1,20 @@
 from django.shortcuts import render
 from django.core import serializers
 from .models import Post, Like
+from mysite.models import info
 from django.http import HttpResponse, JsonResponse
 
 def index(request):
         #posts = Post.objects.all()  # Getting all the posts from database
         #return render(request, 'post/index.html', { 'posts': posts })
         if request.is_ajax():
-            x = serializers.serialize('json',(Post.objects.all()))
-            return JsonResponse(x, content_type="application/json", safe=False)
+            y = (Post.objects.values())
+            x = Post.objects.latest()
+
+
+            return JsonResponse(x,y, safe=False)
         else:
-            post = Post.objects.all()
+            post = Post.objects.values()
             return render(request, 'post/index.html', {"post":post})
 def likePost(request):
         if request.method == 'GET':
