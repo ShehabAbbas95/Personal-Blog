@@ -1,0 +1,27 @@
+{% extends "blog/base.html" %}
+{% load static %}
+
+{% block title%}
+
+{% endblock %}
+{% block body%}
+{% if messages %}
+  {% for message in messages %}
+  <div class="alert alert-success">
+    {{message}}
+  </div>
+
+  {% endfor %}
+{% endif %}
+  
+
+
+{% for i in blog%}
+  <h1>topic:{{i.title}}</h1>
+  <p>text:{{i.text}}</p>
+{% endfor %}
+
+
+
+
+{% endblock %}

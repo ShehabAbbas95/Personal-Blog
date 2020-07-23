@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Like Post App</title>
+</head>
+<body id="body">
+  <!--
+    <p id="message"></p>
+    {% for post in posts %}
+    <h3>{{ forloop.counter }}) {{ post.post_heading }}</h3>
+    <p>{{ post.post_text }} </p>
+    <a class="likebutton" id="like{{post.id}}" href="#" data-catid="{{ post.id }}">Like</a>
+    {% endfor %}
+  --> <div class="" id="result">  </div>
+      <div style=""background:yellow; font-size:30;""  id="m">
+        {%for i in post %}
+        <h1>Title:{{i.post_heading}}</h1>
+          <textarea name="name" rows="8" cols="80">Post:{{i.post_text}}</textarea>
+        {% endfor %}
+      </div>
+    <button type="button" name="button" onclick="more(this)">More</button>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script type="text/javascript">
+    $('.likebutton').click(function(){
+    var catid;
+    catid = $(this).attr("data-catid");
+    $.ajax(
+    {
+        type:"GET",
+        url: "/likepost",
+        data:{
+                 post_id: catid
+        },
+        success: function( data )
+        {
+            $( '#like'+ catid ).remove();
+            $( '#message' ).text(data);
+        }
+     })
+});
+
+  function more(){
+    $.ajax({
+      url: '',
+
+      contentType: 'application/json; charset=utf-8',
+      dataType: 'json',
+      success: function(x){
+        document.querySelector('#result').style.background = "green";
+        var text = x["post_text"];
+        document.querySelector('#result').innerHTML = x;
+
+      }
+    })
+  };
+</script>
+</body>
+</html>

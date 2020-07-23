@@ -1,0 +1,90 @@
+{% extends "mysite/base.html" %}
+
+{% block title%}
+  Mentoring Request
+{% endblock %}
+
+{% block body%}
+
+
+<form class="base-form"  method="POST">
+  {% csrf_token %}
+  <h1>User Information</h1>
+  <div class="txtb">
+    <div class="form">
+      <label for="usnm"> Name</label>
+      <input type="text" name="usnm" placeholder="e.g. Shehab" >
+
+      <label for="age">Age</label>
+      <input type="number"  min="18" name="age" placeholder="18">
+      <label for="email">Email</label>
+      <input type="text" name="email" placeholder="e.g. Shehab@gmail.com" pattern="[a@ae.org]" title="name@domain.com">
+      <label for="phone">Phone</label>
+      <input type="tel" name="phone" placeholder="Phone">
+
+      <select  name="education">
+        <option value="Education" disabled selected>Education</option>
+        {% for i in education%}
+          <option value="{{i}}">{{i}}</option>
+        {% endfor %}
+      </select>
+
+
+
+        <label  for="mytrack">My Track</label>
+        <input type="checkbox" value="mytrack" name="mytrack" id="mytrack" onclick="mytracks(this)">
+
+        <div  style="display:none; color:white; margin:30px;" id="yourtrack"></div>
+
+        <label for="other_track">Custom Request</label>
+        <input type="checkbox" value="Custom_request" id="other_track" onclick="another(this)" name="other_track">
+        <label for="level">Level</label>
+        <select  name="level">
+          <option value="Level" disabled selected>Level</option>
+          <option value="nothing">Knows Nothing</option>
+          <option value="basics">Basics (What's a model , testing)</option>
+          <option value="advanced">Intermediate (Good at supevised learning)</option>
+          <option value="advanced">Advanced</option>
+          <option value="dragon">Dragon</option>
+        </select>
+        <div class="form-group">
+          <label for="other">Describtion (i.e. IOT, Web Development)</label>
+          <textarea class="form-control" id="other" rows="3"></textarea>
+        </div>
+
+        <div > <button type="submit" class="btn btn-success" ">Submit</button></div>
+      </div>
+    </div>
+
+
+
+  <script >
+
+    function mytracks(checkbox){
+      if (checkbox.checked == true){
+          document.getElementById('other_track').disabled= true;
+          document.getElementById('yourtrack').style.display = "block";
+      }
+      else{
+        document.getElementById('other_track').disabled= false;
+        document.getElementById('yourtrack').style.display = "none";
+      }
+  };
+  function another(checkbox) {
+
+    if (checkbox.checked == true){
+      document.getElementById('mytrack').disabled= true;
+      document.getElementById('other').style.display = "block" ;
+    }
+    else{
+      document.getElementById('mytrack').disabled= false;
+      document.getElementById('other').style.display = "none" ;
+
+    }
+  };
+  </script>
+
+
+</form>
+
+{% endblock %}

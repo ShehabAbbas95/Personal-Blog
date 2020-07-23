@@ -1,0 +1,31 @@
+{% extends "mysite/base.html"%}
+{% block title %}
+  Cosultancy Request
+{% endblock %}
+{% block body %}
+
+
+
+   <form action="" method="post" class="base-form" >
+     {% csrf_token %}
+     <div class="txtb">
+       <div class="form">
+
+
+           <label for="company"> Company Name: </label>
+           <input name="company_name" />
+
+
+         <label for="topic"> Topic: </label>
+         <input name="topic" />
+         <label for="email"> Email: </label>
+         <input name="email" />
+         <label for="phone">phone </label>
+         <input name="phone" />
+        <div class="basebtn"><input type="submit"  value="Submit"></div>
+
+        </div>
+     </div>
+   </form>
+
+{% endblock %}

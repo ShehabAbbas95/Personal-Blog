@@ -1,0 +1,47 @@
+{% extends "mysite/base.html" %}
+{% block title%}
+
+{% endblock %}
+{% block body%}
+{% if messages %}
+  {% for message in messages %}
+  <div class="alert alert-success">
+    {{message}}
+  </div>
+
+  {% endfor %}
+{% endif %}
+
+<div class="all">
+  <div class="nav">
+    <ul>
+      <a href="{% url 'index'%}"><li>Home</li></a>
+      <a href="#about"><li>About</li></a>
+      <li>Blog</li>
+      <a href="#contact"><li>Contact</li></a>
+
+    </ul>
+  </div>
+  <div >
+  <img src="static/mysite/images/mentor.jpg" alt="Mentormeaning">
+  </div>
+<div class="ask">
+  <a href="{% url 'mentorship' %}"><button type="button" name="button">Ask For Mentorship</button></a>
+  <a href="{% url 'consultation' %}"><button type="button" name="button">Ask For Consultation</button></a>
+</div>
+
+<div class="about" id="about">
+  <h2>About</h2>
+  <li>Engineer Omar</li>
+  <li>Studied Computer Engineering At Faculty Of Enginnering Ain Shams University</li>
+  <li>Years Of Experience</li>
+</div>
+<div class="about" id="contact">
+  <h2>Contact</h2>
+  <li>0114</li>
+  <li>Email</li>
+
+</div>
+</div>
+
+{% endblock %}
