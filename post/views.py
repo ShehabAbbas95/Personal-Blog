@@ -8,11 +8,13 @@ def index(request):
         #posts = Post.objects.all()  # Getting all the posts from database
         #return render(request, 'post/index.html', { 'posts': posts })
         if request.is_ajax():
-            y = (Post.objects.values())
-            x = Post.objects.latest()
+            z = list(Post.objects.values())
+            y = {"title": z[-1]["post_heading"],
+                "text": z[-1]["post_text"],}
+            x = {"title": z[-1]["post_heading"],
+                "text": z[-1]["post_text"],}
 
-
-            return JsonResponse(x,y, safe=False)
+            return JsonResponse((x) ,safe=False)
         else:
             post = Post.objects.values()
             return render(request, 'post/index.html', {"post":post})

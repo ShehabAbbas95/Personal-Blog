@@ -32,6 +32,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'mysite.apps.MysiteConfig',
+    'bootstrap.apps.BootstrapConfig',
     'blog.apps.BlogConfig',
     'post.apps.PostConfig',
     'django.contrib.admin',

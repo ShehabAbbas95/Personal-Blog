@@ -1,0 +1,26 @@
+.dropdown-menu{
+  background: #BBB;
+}
+.dropdown-menu >li>a:hover ,
+.dropdown-menu >li> a:focus
+{
+  background-color: red;
+  padding-left: 25px;
+
+}
+
+.dropdown-menu .divider {
+  background: blue;
+}
+
+.dropdown-menu > li > a{
+  padding: 6px 15px;
+  transition: padding 0.5s ease;
+  transition: padding 0.5s ease;
+  --o-transition: padding 0.5s ease;
+  --transition: padding 0.5s ease;
+}
+.navbar-right .dropdown-menu {
+  right: auto;
+  left:0;
+}

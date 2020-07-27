@@ -1,0 +1,19 @@
+{% extends "admin/change_form.html" %}
+{% load i18n %}
+
+{% block extrahead %}{{ block.super }}
+
+<script src="/media/js/jquery.js"></script>
+<script>
+    $(document).ready(function() {
+        $('.move_to_submit_row').insertBefore('.submit-row>input:first');
+    });
+</script>
+{% endblock extrahead %}
+
+{% block after_field_sets %}{{ block.super }}
+
+<input value="{% trans "Profile" %}"
+ onclick="javascript: window.location='/admin/central/userprofile/{{ original.get_profile.id }}/'"
+ class="move_to_submit_row" type="button"/>
+{% endblock after_field_sets %}

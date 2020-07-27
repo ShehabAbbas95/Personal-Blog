@@ -13,7 +13,7 @@ from django.contrib import messages
 
 # homepage function
 def index(request):
-    return render(request,"mysite/try.html")
+    return render(request,"mysite/index.html")
 
 # Cosultancy
 def consultation(request):
