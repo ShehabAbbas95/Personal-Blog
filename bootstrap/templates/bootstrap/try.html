@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+  <script type="text/javascript">
+
+
+
+
+    function calling_ajax(){
+      var ok = document.getElementById('pass').value;
+        $.ajax({
+
+        url: 'try1/',
+      
+        contentType: 'application/json; charset=utf-8',
+        data:{
+          'ok':ok,
+        },
+        dataType: 'json',
+        success:function(x){
+            var z = document.getElementById('pass').value;
+
+            document.querySelector('#result2').innerHTML = ` hello `;
+
+      }
+    })
+  };
+
+  </script>
+
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+
+  </head>
+  <body>
+
+
+
+    {% csrf_token %}
+    <button class="btn btn-primary" type="button" onclick="calling_ajax()" >call</button>
+    <input type="text" id="pass" value="">
+    <input type="text" id="text" value="" placeholder="text">
+    <div class="" id="result">
+
+    </div>
+    <div class="">
+      <p>uauauuh</p>
+    </div>
+    <div class="" id="result2">
+
+    </div>
+
+  </body>
+</html>

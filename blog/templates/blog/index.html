@@ -1,4 +1,3 @@
-
 <html>
  <script type="text/javascript">
    /*
@@ -23,18 +22,19 @@
   function more(){
 
     $.ajax({
-      url: '/post',
+      url: '/blog',
       contentType: 'application/json; charset=utf-8',
       dataType: 'json',
-      success: function(json_new_title){
+      success: function(new_post){
 
 
           /* Getting the new title and text and then compares those values with posts that already exist*/
-          var new_post_title = json_new_title.title;
+          var new_post_title = new_post.title;
           var post = document.getElementById(new_post_title);
-          var new_post_text = json_new_title.text;
-          var id = json_new_title.id;
+          var new_post_text = new_post.text;
+          var id = new_post.id;
           var old_text = document.getElementById(id).value;
+          console.log(id,old_text,new_post_text,post,new_post_title)
           /* if that post is not exist then adding it to the posts in post at div with id result */
           if (!post ){
             document.querySelector('#h1').innerHTML = ` Title:${new_post_title} `;

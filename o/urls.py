@@ -23,5 +23,5 @@ urlpatterns = [
     path('',include("mysite.urls")),
     path('', include("blog.urls")),
     path('bootstrap/', include("bootstrap.urls")),
-    path('post/', include('post.urls')),
+    path('', include('post.urls')),
 ]

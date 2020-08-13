@@ -1,4 +1,6 @@
 {% extends 'bootstrap/zero.html' %}
+{%load static%}
+
 
 {% block title%}
   Navbar
@@ -61,7 +63,47 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
-<div style="height:2000px; margin:100px;">
-  asdasd
+
+<!-- start carusel -->
+
+<div id="myslide" class="carousel slide " data-ride="carousel">
+  <!-- Indicators -->
+  <ol class="carousel-indicators">
+    <li data-target="#myslide" data-slide-to="0" class="active"></li>
+    <li data-target="#myslide" data-slide-to="1"></li>
+
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner">
+    <div class="item active">
+      <img src="{%static 'bootstrap/img/pic1.jpg'%}" alt="pic 1">
+      <div class="carousel-caption">
+        ...
+      </div>
+    </div>
+    <div class="item">
+      <img src="{%static 'bootstrap/img/pic2.jpg'%}" alt="pic 2">
+      <div class="carousel-caption">
+        ...
+      </div>
+    </div>
+
+
+    ...
+  </div>
+
+  <!-- Controls -->
+  <a class="left carousel-control" href="#myslide" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left"></span>
+  </a>
+  <a class="right carousel-control" href="#myslide" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+  </a>
 </div>
+<!-- end carousel -->
+<div class="">
+  <a href="{% url 'trys' %}">trys</a>
+</div>
+<button type="button" class="btn btn-primary" onclick="more()">More</button>
 {% endblock %}

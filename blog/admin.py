@@ -9,4 +9,4 @@ admin_site = MyAdminSite(name='myadmin')
 
 
 
-admin_site.register(blog)
+admin_site.register(Post)

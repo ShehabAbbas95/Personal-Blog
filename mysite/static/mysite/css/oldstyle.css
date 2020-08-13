@@ -1,31 +1,11 @@
 body{
-  background-image: url('images/background.jpg');
-
-  background-size: cover;
-  background-image: linear-gradient(90deg,#3498db,#8e44ad);
+  background: red;
 }
-
 .all{
   text-align:center;
   color: black;
 }
 
-.nav{
-  background: blue;
-  color: red;
-  font-size: 26;
-  font-style: oblique;
-  text-align: center;
-  margin:20px;
-
-}
-ul li {
-  padding: 10px;
-  style: none;
-
-  display: inline-block;
-  list-style: none;
-}
 .ask{
   margin: 40px;
   text-align: center;
@@ -53,7 +33,7 @@ h2{
 
 .base-form{
   width: 550px;
-  background: #2C255E;
+  background: red;
   min-height: 650px;
   padding: 50px 40px;
   border-radius: 10px;
@@ -172,5 +152,5 @@ color: black;
 }
 .xo{
   background: yellow;
-  
+
 }

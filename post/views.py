@@ -21,7 +21,7 @@ def index(request):
             posts = list(Post.objects.order_by('published_date').values())
             last_post = {"title":posts[-1]["post_heading"],
                "text": posts[-1]["post_text"],}
-            return render(request, 'post/index1.html', {"posts":posts,"last_post":last_post})
+            return render(request, 'post/index.html', {"posts":posts,"last_post":last_post})
 def likePost(request):
         if request.method == 'GET':
                post_id = request.GET['post_id']
@@ -31,17 +31,3 @@ def likePost(request):
                return HttpResponse("Success!") # Sending an success response
         else:
                return HttpResponse("Request method is not a GET")
-
-
-def mo(request):
-        #posts = Post.objects.all()  # Getting all the posts from database
-        #return render(request, 'post/index.html', { 'posts': posts })
-        if request.is_ajax():
-            post = Post.objects.all()
-            obj = Post.objects.order_by('-id')[0]
-            z = Post.objects.exclude(id=obj['id'])
-            z= serializers.serialize('json',z)
-            return JsonResponse((z) ,safe=False)
-        else:
-            y = Post.objects.values()
-            return  HttpResponse("not an ajax call")

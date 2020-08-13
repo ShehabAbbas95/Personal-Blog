@@ -1,3 +1,5 @@
+
+/* overriding bootstrap */
 .dropdown-menu{
   background: #BBB;
 }
@@ -23,4 +25,8 @@
 .navbar-right .dropdown-menu {
   right: auto;
   left:0;
+}
+
+.carousel-inner {
+  min-width: 100%;
 }
