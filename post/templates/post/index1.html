@@ -1,0 +1,87 @@
+
+<html>
+ <script type="text/javascript">
+   /*
+    $('.likebutton').click(function(){
+    var catid;
+    catid = $(this).attr("data-catid");
+    $.ajax(
+    {
+        type:"GET",
+        url: "/likepost",
+        data:{
+                 post_id: catid
+        },
+        success: function( data )
+        {
+            $( '#like'+ catid ).remove();
+            $( '#message' ).text(data);
+        }
+     })
+});*/
+
+  function more(){
+
+    $.ajax({
+      url: '/post',
+      contentType: 'application/json; charset=utf-8',
+      dataType: 'json',
+      success: function(json_new_title){
+
+
+          /* Getting the new title and text and then compares those values with posts that already exist*/
+          var new_post_title = json_new_title.title;
+          var post = document.getElementById(new_post_title);
+          var new_post_text = json_new_title.text;
+          var id = json_new_title.id;
+          var old_text = document.getElementById(id).value;
+          /* if that post is not exist then adding it to the posts in post at div with id result */
+          if (!post ){
+            document.querySelector('#h1').innerHTML = ` Title:${new_post_title} `;
+            document.querySelector('#text').innerHTML = ` ${new_post_text} `;
+            document.querySelector('#text').style.display = "block";
+            document.querySelector('#result').style.display = "block";
+          }
+          /* if that post is already exist but there is an update in it's text*/
+          else if (new_post_text != old_text) {document.getElementById(id).innerHTML = new_post_text;}
+          else{document.querySelector('#msg').innerHTML = "You've Caught up till now";}
+        }
+      });
+};
+
+
+
+</script>
+
+
+<head>
+    <title>Like Post App</title>
+</head>
+<body id="body">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <!--
+    <p id="message"></p>
+    {% for post in posts %}
+    <h3>{{ forloop.counter }}) {{ post.post_heading }}</h3>
+    <p>{{ post.post_text }} </p>
+    <a class="likebutton" id="like{{post.id}}" href="#" data-catid="{{ post.id }}">Like</a>
+    {% endfor %}
+  -->
+      <div style=""background:yellow; font-size:30;""  id="m">
+        {%for i in posts %}
+        <h1 id={{i.post_heading}}>Title:{{i.post_heading}}</h1>
+          <textarea id={{i.id}} name="name" rows="8" cols="80" >{{i.post_text}}</textarea>
+        {% endfor %}
+      </div>
+
+      <!-- Adding the response from ajax to the posts-->
+      <div class="" id="result" style="display:none;">
+          <h1 id="h1"></h1>
+          <textarea name="name" rows="8" cols="80" id="text" ></textarea>
+      </div>
+
+    <button type="button" name="button" onclick="more()">More</button>
+    <!-- Alert message if no new posts to be loaded-->
+    <div class="" id="msg"></div>
+</body>
+</html>
