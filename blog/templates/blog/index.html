@@ -1,62 +1,9 @@
 {% extends 'blog/base.html' %}
 {% block title %} Blog {% endblock %}
 {% block body %}
- <script type="text/javascript">
-   /*
-    $('.likebutton').click(function(){
-    var catid;
-    catid = $(this).attr("data-catid");
-    $.ajax(
-    {
-        type:"GET",
-        url: "/likepost",
-        data:{
-                 post_id: catid
-        },
-        success: function( data )
-        {
-            $( '#like'+ catid ).remove();
-            $( '#message' ).text(data);
-        }
-     })
-});*/
-
-  function more(){
-
-    $.ajax({
-      url: '/blog',
-      contentType: 'application/json; charset=utf-8',
-      dataType: 'json',
-      success: function(new_post){
 
 
-          /* Getting the new title and text and then compares those values with posts that already exist*/
-          var new_post_title = new_post.title;
-          var post = document.getElementById(new_post_title);
-          var new_post_text = new_post.text;
-          var id = new_post.id;
 
-          /* if that post is not exist then adding it to the posts in post at div with id result */
-          if (post){
-              var old_text = document.getElementById(id).value;
-              if (new_post_text != old_text) {document.getElementById(id).innerHTML = new_post_text;}
-              else{console.log(old_text);
-                /* Alert message if no new posts to be loaded*/
-                alert("You've Caught up till now");
-              }
-          }
-          /* if that post is already exist but there is an update in it's text*/
-          else{
-            document.querySelector('#h1').innerHTML = ` Title:${new_post_title} `;
-            document.querySelector('#text').innerHTML = ` ${new_post_text} `;
-            document.querySelector('#text').style.display = "block";
-            document.querySelector('#result').style.display = "block";
-          }
-        }
-      });
-};
-</script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
   <!--
     <p id="message"></p>
     {% for post in posts %}
@@ -65,7 +12,7 @@
     <a class="likebutton" id="like{{post.id}}" href="#" data-catid="{{ post.id }}">Like</a>
     {% endfor %}
   -->
-  <div class="container text-center">
+  <div class="container  text-center">
 
       <div>
         {%for i in posts %}
@@ -74,28 +21,53 @@
         {% endfor %}
       </div>
 
+
       <!-- Adding the response from ajax to the posts-->
-      <div class="" id="result" style="display:none;">
+      <div class="container text-center" id="result" style="display:none;">
           <h1 id="h1"></h1>
-          <textarea name="name" rows="8" cols="80" id="text" ></textarea>
+          <textarea class="text-center" name="name" rows="8" cols="80" id="text"" ></textarea>
       </div>
 
     <button type="button" class="btn btn-primary" onclick="more()">More</button>
 
-    <nav aria-label="..." class="text-center">
-      <ul class="pagination justify-content-center">
-        <li class="page-item disabled">
-          <a class="page-link" href="#" tabindex="-1">Previous</a>
-        </li>
-        <li class="page-item"><a class="page-link" href="#">1</a></li>
+  <nav aria-label="...">
+    <ul class="pagination justify-content-center ">
+
+      {% if page_obj.has_previous %}
+      <li class="page-item">
+        <a class="page-link" href="?page=1">First &raquo;</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.previous_page_number }}" tabindex="-1">Previous</a>
+      </li>
+      {% endif %}
+
+      {% for num in page_obj.paginator.page_range %}
+
+        {% if page_obj.number == num %}
         <li class="page-item active">
-          <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+          <a class="page-link" href="?page={{ num }} ">Page {{ num }} of {{ page_obj.paginator.num_pages }} <span class="sr-only">(current)</span></a>
         </li>
-        <li class="page-item"><a class="page-link" href="#">3</a></li>
-        <li class="page-item">
-          <a class="page-link" href="#">Next</a>
-        </li>
-      </ul>
-    </nav>
+        {% elif num > page_obj.number|add:'-4' and num < page_obj.number|add:'4' %}
+          <a class="page-link" href="?page={{ num }} "> {{ num }} </a>
+        {% endif%}
+      {% endfor %}
+
+
+
+      {% if page_obj.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+      </li>
+      <li class="page-item">
+        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+      </li>
+      {% endif %}
+
+    </ul>
+  </nav>
+
 </div>
+
+
 {% endblock %}
