@@ -9,18 +9,18 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>{{post.post_heading}}</title>
+  <title id="{{post.id}}">{{post.post_heading}}</title>
 
 
   <!-- Bootstrap core CSS -->
 
   <link href="{% static 'blog/vendor/bootstrap/css/bootstrap.css' %}" rel="stylesheet">
-
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <!-- Custom styles for this template -->
   <link rel="stylesheet" href="{% static 'blog/css/blog-post.css' %}">
   <!-- Add icon library -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 
 
 </head>
@@ -29,7 +29,7 @@
 
 
   <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
       <a class="navbar-brand" href="#">Blog</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,7 +54,7 @@
         </ul>
       </div>
     </div>
-  </nav>
+  </nav> -->
 
   <!-- Page Content -->
 
@@ -70,18 +70,18 @@
         <!-- Author -->
         <p class="lead">
           by
-          <a href="#">Eng.Omar</a>
+          <a>Eng.Omar</a>
         </p>
 
         <hr>
 
         <!-- Date/Time -->
-        <p>Posted on J{{post.published_date}}</p>
+        <p>Posted on {{post.published_date}}</p>
 
         <hr>
 
         <!-- Preview Image -->
-        <img class="img-fluid rounded" src="http://placehold.it/900x300" alt="">
+        <img class="img-fluid rounded" src="{{post.image.url}}" alt="">
 
         <hr>
 
@@ -103,25 +103,25 @@
               <div class="form-group">
                 <textarea class="form-control" rows="3"></textarea>
               </div>
-              <span class="far fa-thumbs-up"></span>
-              <i class="far fa-thumbs-down"></i>
-              <script type="text/javascript">
+              <button class="far fa-thumbs-up fa-2x" type="button" name="button"></button>
+              <i class="far fa-thumbs-down fa-2x"></i>
+              <!-- <script type="text/javascript">
               function myFunction(x) {
                 x.classList.toggle("fa-thumbs-down");
               }
-              </script>
+              </script> -->
               <button type="submit" class="btn btn-primary ">Submit</button>
 
             </form>
           </div>
         </div>
+        <!-- Comments Form -->
 
         <!-- Single Comment -->
         <div class="media mb-4">
           <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
           <div class="media-body">
             <h5 class="mt-0">Commenter Name</h5>
-            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
           </div>
         </div>
 
@@ -130,13 +130,10 @@
           <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
           <div class="media-body">
             <h5 class="mt-0">Commenter Name</h5>
-            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
-
             <div class="media mt-4">
               <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
               <div class="media-body">
                 <h5 class="mt-0">Commenter Name</h5>
-                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
               </div>
             </div>
 
@@ -144,7 +141,6 @@
               <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
               <div class="media-body">
                 <h5 class="mt-0">Commenter Name</h5>
-                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.
               </div>
             </div>
 

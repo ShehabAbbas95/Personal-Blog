@@ -1,5 +1,8 @@
+function x(){
+   document.querySelector('#z').innerHTML = "js";
+ };
 
-  /*
+/*
    $('.likebutton').click(function(){
    var catid;
    catid = $(this).attr("data-catid");
@@ -18,7 +21,7 @@
     })
 });*/
 
- function more(){
+function more(){
 
    $.ajax({
      url: '/blog/index_ajax',
@@ -32,22 +35,23 @@
          var post = document.getElementById(new_post_title);
          var new_post_text = new_post.text;
          var id = new_post.id;
-
          /* if that post is not exist then adding it to the posts in post at div with id result */
          if (post){
-             var old_text = document.getElementById(id).value;
-             if (new_post_text != old_text) {document.getElementById(id).innerHTML = new_post_text;}
+             var old_text = document.getElementById(id).innerHTML;
+             if (old_text!=new_post_text) {console.log(new_post_text);
+               console.log(old_text);
+               document.getElementById(id).innerHTML = new_post_text;}
              else{console.log(old_text);
                /* Alert message if no new posts to be loaded*/
                alert("You've Caught up till now");
              }
          }
-         /* if that post is already exist but there is an update in it's text*/
+         /* if that post is already exist but there is an update in it's content*/
          else{
-           document.querySelector('#h1').innerHTML = ` Title:${new_post_title} `;
-           document.querySelector('#text').innerHTML = ` ${new_post_text} `;
+           document.querySelector('#response-post-topic').innerHTML = ` Topic:${new_post_title} `;
+           document.querySelector('#response-post-content').innerHTML = ` ${new_post_text} `;
+           document.querySelector('#response-postlink').href = `post/${id}`;
            document.querySelector('#result').style.display = "block";
-           document.querySelector('#text').style.textAlign = "center";
 
          }
        }

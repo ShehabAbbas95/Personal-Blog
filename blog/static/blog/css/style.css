@@ -1,0 +1,23 @@
+.view_post textarea{
+  resize:none;
+  border:none;
+  min-height:70;
+  max-height: 1000;
+  background: #0f155c;
+  overflow: hidden;
+  font-weight:50;
+  color: white;
+
+
+}
+.view_post p{
+  font-weight: bold;
+  font-size: 24px;
+}
+.post_main a{
+float:inherit;
+}
+#text{
+  padding: 0px;
+  min-height: 100px !important;
+}

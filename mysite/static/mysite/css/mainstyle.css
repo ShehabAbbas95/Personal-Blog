@@ -1,0 +1,78 @@
+/* overriding bootstrap */
+/* overriding bootstrap drobdown*/
+/* start navbar */
+
+.main div{
+padding: 15px;
+}
+.navbar {
+  background-color:#80808014
+
+}
+
+.navbar-light .navbar-nav .show > .nav-link, .navbar-light .navbar-nav .active > .nav-link,
+ .navbar-light .navbar-nav .nav-link.show,.navbar-light .navbar-brand ,
+ .navbar-light .navbar-nav .nav-link{font-weight: bold;}
+ .navbar-light .navbar-brand span:first-child{
+   color: #767fef;
+   font-weight: bold;
+ }
+ .navbar-light .navbar-brand span:last-child{
+   color: rgb(220 36 36);
+   font-weight: bold;
+ }
+/* end navbar */
+.main img{
+  text-align: center;
+  width: 400px;
+  padding: 10px;
+}
+/*Mysite Style*/
+
+.navbar-default .navbar-collapse, .navbar-default .navbar-form{
+  background: #2f2170;
+  color:black;
+  width:100%;
+}
+.navbar-default .navbar-brand{
+  color: white
+}
+
+.navbar-default .navbar-nav > li > a {
+  color: white
+}
+
+
+
+.about {
+  text-align: left;
+  margin-right: 0;
+
+
+}
+.about >h2 {
+  background: #2f2170;
+  color: white;
+  margin-right: 0px;
+  margin-left: 0px;
+  padding-left:10px;
+  max-height: 40px;
+  line-height: 40px
+
+}
+/*End Mysite style*/
+
+/*Blog Style*/
+
+/*End Blog Style*/
+.ourteam{
+  background:url("/static/bootstrap/img/pic2.jpg") no-repeat center  fixed ;
+  color: white;
+  min-height: 400px;
+
+}
+.team{
+  background: rgba(2,2,2,0.2);
+  min-height: 400px;
+
+}

@@ -1,12 +1,12 @@
 
 /* overriding bootstrap */
 .dropdown-menu{
-  background: #BBB;
+  background: blue;
 }
 .dropdown-menu >li>a:hover ,
 .dropdown-menu >li> a:focus
 {
-  background-color: red;
+  background-color: blue;
   padding-left: 25px;
 
 }
@@ -29,4 +29,11 @@
 
 .carousel-inner {
   min-width: 100%;
+}
+.fab .fa-blogger{
+  font-size: 40px;
+}
+.ourteam{
+  background: red;
+  color: blue;
 }
