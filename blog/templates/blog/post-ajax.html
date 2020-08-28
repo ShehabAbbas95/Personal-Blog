@@ -1,0 +1,38 @@
+{% extends 'mysite/base.html' %}
+
+{%load static%}
+{% block title %} Blog
+
+{% endblock %}
+{% block body %}
+
+    <form  id="info"  >
+      {% csrf_token %}
+      <input type="text" id="first" value="">
+      <input type="text" id="last" value="">
+      <button type="submit" name="button">Submit</button>
+    </form>
+
+    <script>
+    $(document).ready(function(){
+    $('#info').on('submit', function(e){
+
+    $.ajax({
+    method:'POST',
+    url:'/blog/likepost',
+    data:{
+    firstnamevalue:$('#first').val(),
+    lastnamevalue:$('#last').val(),
+    csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val()
+    },
+    success: function() {
+
+    alert('Data Successfully ');
+
+    },
+    });
+
+    });
+    });
+    </script>
+{% endblock %}

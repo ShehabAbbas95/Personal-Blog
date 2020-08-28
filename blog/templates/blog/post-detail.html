@@ -99,9 +99,13 @@
         <div class="card my-4 text-center">
           <h5 class="card-header">Leave a Comment:</h5>
           <div class="card-body">
-            <form>
+
+            <form id="commentForm" style="margin-left:10px;">
+              {% csrf_token %}
+
               <div class="form-group">
-                <textarea class="form-control" rows="3"></textarea>
+                <textarea class="form-control" rows="3" id="comment" required></textarea>
+                <input type="text" id="visitor_name" placeholder="Your_Name" required>
               </div>
               <button role="checkbox" class="far fa-thumbs-up fa-2x" type="button" name="button"></button>
               <i class="far fa-thumbs-down fa-2x"></i>
@@ -227,6 +231,7 @@
   <!-- Bootstrap core JavaScript -->
   <script src="{% static 'blog/vendor/jquery/jquery.min.js' %}"></script>
   <script src="{% static 'blog/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'blog/js/post-detail.js' %}"></script>
 {%endfor%}
 </body>
 

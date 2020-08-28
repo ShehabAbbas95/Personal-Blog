@@ -10,3 +10,4 @@ admin_site = MyAdminSite(name='myadmin')
 
 
 admin_site.register(Post)
+admin_site.register(Userscomment)
