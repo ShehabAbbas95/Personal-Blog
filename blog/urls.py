@@ -8,7 +8,8 @@ from django.conf.urls.static import static
 urlpatterns = [
     path("blog/",Posts.as_view(), name="blog"),
     path("blog/post/<int:id>/",views.detail, name="detail"),
-    path('blog/index_ajax',views.index_ajax,name='index_ajax')
+    path('blog/index_ajax',views.index_ajax,name='index_ajax'),
+    path('blog/like-post',views.likePost,name='like-post')
 ]
 
 if settings.DEBUG:
