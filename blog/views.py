@@ -29,8 +29,10 @@ class PostDetailView(DetailView):
         context = {'post': post}
         return render(request, 'blog/post_detail.html', context)
 def detail(request,id):
-    post = Post.objects.filter(id = id).all()
-    return render(request, 'blog/post-detail.html', {'post':post})
+    context = {'post' : Post.objects.filter(id = id).all(),
+               'comments' : Userscomment.objects.filter(post_id = id).all()}
+
+    return render(request, 'blog/post-detail.html', context)
 
 # def likePost(request):
 #         if request.method == 'GET':
@@ -55,6 +57,10 @@ def index_ajax(request):
 #          userinfo.save()
 #          return HttpResponse("Success")
 def likepost(request):
-    user_data = Userscomment(comment = request.POST.get('comment'), username = request.POST.get('username'))
+    user_data = Userscomment(comment = request.POST.get('comment'),
+                            username = request.POST.get('username'), post_id = request.POST.get('id'))
     user_data.save()
-    return HttpResponse("Success")
+    lastcomment = list(Userscomment.objects.order_by('published_date').values())
+    lastcomment = {"comment": lastcomment[-1]["comment"],
+        "username": lastcomment[-1]["username"],}
+    return JsonResponse((lastcomment) ,safe=False)

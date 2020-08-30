@@ -47,10 +47,6 @@ textarea.form-control{
   font-size: 24px;
   max-width: 60px;
 }
-.comment > span{
-  font-size: 14px;
-  max-width: 60px;
-}
 /* .comment h5 {
   font-size: 10px;
   margin-left: 160px

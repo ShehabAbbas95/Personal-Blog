@@ -10,6 +10,7 @@
   <meta name="author" content="">
 
   <title id="{{post.id}}">{{post.post_heading}}</title>
+  <p id="id" style="display:none;">{{post.id}}</p>
 
 
   <!-- Bootstrap core CSS -->
@@ -107,37 +108,64 @@
                 <textarea class="form-control" rows="3" id="comment" required></textarea>
                 <input type="text" id="visitor_name" placeholder="Your_Name" required>
               </div>
-              <button role="checkbox" class="far fa-thumbs-up fa-2x" type="button" name="button"></button>
-              <i class="far fa-thumbs-down fa-2x"></i>
+              <div class="like">
+                <button  class="far fa-thumbs-up fa-2x" type="button" name="button"></button>
+                <button role="checkbox" class="far fa-thumbs-down fa-2x" type="button" name="button"></button>
+              </div>
               <!-- <script type="text/javascript">
               function myFunction(x) {
                 x.classList.toggle("fa-thumbs-down");
               }
               </script> -->
-              <button type="submit" class="btn btn-primary ">Submit</button>
+              <button type="submit" class="btn btn-primary " >Submit</button>
 
             </form>
+
+
           </div>
         </div>
         <!-- Comments Form -->
 
         <!-- Single Comment -->
-        <div class="media mb-4">
-          <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-          <div class="media-body">
-            <h5 class="mt-0">Commenter Name</h5>
+        <h3>Comments</h3>
+          <div class="media ">
+            <div class="media-body">
+              <div class="livecomment" style="display:none;" id="livecomment">
+                <textarea name="name" rows="2.5" cols="60"  id="livecomment-text"></textarea>
+                <h5>  <span id="liveusername"></span></h5>
+                <p id="lastcomment-date"></p>
+              </div>
+            </div>
           </div>
-        </div>
+          {% for comment in comments%}
+          <div class="container">
+            <div class="row col-md-4">
+              <div class="media mb-4">
+                <div class="media-body">
+                  <div class="comment">
+                    <textarea name="name" rows="2.5" cols="60" readonly >{{comment.comment}}</textarea>
+                    <h5 > Commented By: <span>{{comment.username}}</span> </h5>
+                    <span  >{{comment.published_date}}</span>
+                </div>
+              </div>
+             </div>
+            </div>
+          </div>
+          {%endfor%}
 
         <!-- Comment with nested comments -->
-        <div class="media mb-4">
+
+
+         <!-- <div class="media mb-4">
           <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
           <div class="media-body">
             <h5 class="mt-0">Commenter Name</h5>
+              <p></p>
             <div class="media mt-4">
               <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
               <div class="media-body">
                 <h5 class="mt-0">Commenter Name</h5>
+
               </div>
             </div>
 
@@ -151,13 +179,13 @@
           </div>
         </div>
 
-      </div>
+      </div> -->
 
       <!-- Sidebar Widgets Column -->
-      <div class="col-md-4">
+      <div class="">
 
         <!-- Search Widget -->
-        <div class="card my-4">
+        <!-- <div class="card my-4">
           <h5 class="card-header">Search</h5>
           <div class="card-body">
             <div class="input-group">
@@ -167,7 +195,7 @@
               </span>
             </div>
           </div>
-        </div>
+        </div> -->
 
         <!-- Categories Widget -->
         <div class="card my-4">
@@ -232,6 +260,7 @@
   <script src="{% static 'blog/vendor/jquery/jquery.min.js' %}"></script>
   <script src="{% static 'blog/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
   <script src="{% static 'blog/js/post-detail.js' %}"></script>
+
 {%endfor%}
 </body>
 
