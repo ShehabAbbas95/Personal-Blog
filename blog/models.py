@@ -3,15 +3,19 @@ from django.db import models
 # Create your models here.
 class Post(models.Model):
             post_heading = models.CharField(max_length=200)
+            categorey = models.TextField(default=None,null=True)
             post_text = models.TextField()
             published_date = models.DateTimeField(auto_now=True)
             id = models.AutoField(primary_key=True)
-            image = models.ImageField(upload_to='images/')
+            image = models.ImageField(upload_to='images/',blank=True)
 
-            def __str__(self):      # If python2 use __str__ if python3
+            def __str__(self):
                  return (self.post_heading)
-class Like(models.Model):
-        post = models.ForeignKey(Post, on_delete = models.CASCADE)
+class React(models.Model):
+        post_id = models.IntegerField()
+        no_of_likes = models.IntegerField(default=0)
+        no_of_dislikes = models.IntegerField(default=0)
+
 class Userscomment(models.Model):
     comment= models.CharField(max_length=512)
     username= models.CharField(max_length=200)

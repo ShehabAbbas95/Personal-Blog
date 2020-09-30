@@ -1,21 +1,15 @@
-<!DOCTYPE html>
+{% extends 'mysite/base.html' %}
 {%load static%}
-<html lang="en">
-
-<head>
+{% block title %}
+  {{post_title}}
+{% endblock %}
+{% block body %}
   {% for post in post%}
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-
-  <title id="{{post.id}}">{{post.post_heading}}</title>
-  <p id="id" style="display:none;">{{post.id}}</p>
 
 
   <!-- Bootstrap core CSS -->
-
-  <link href="{% static 'blog/vendor/bootstrap/css/bootstrap.css' %}" rel="stylesheet">
+  <!-- <link href="{% static 'blog/vendor/bootstrap/css/bootstrap.css' %}" rel="stylesheet"> -->
+  <link rel="stylesheet" href="{% static 'mysite/css/bootstrap.css' %}">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <!-- Custom styles for this template -->
@@ -24,11 +18,11 @@
 
 
 
-</head>
 <div class="container">
-<body>
 
-
+  {% for cat in post_categoreies%}
+    {{cat}}
+  {%endfor%}
   <!-- Navigation -->
   <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container">
@@ -66,8 +60,8 @@
       <div class="col-lg-8">
 
         <!-- Title -->
-        <h1 class="mt-4">{{post.post_heading}}</h1>
-
+        <h1 class="mt-4" id="{{post.id}}">{{post.post_heading}}</h1>
+        <span id="post_id" style="display:none">{{post.id}}</span>
         <!-- Author -->
         <p class="lead">
           by
@@ -95,95 +89,98 @@
           </footer>
         </blockquote>
         <hr>
+        <!-- buttons for commenting or show comments -->
+
+        <form >
+          <div class="ml-3 mb-1">
+              {% for react in reacts%}
+                <p  class="far fa-thumbs-up fa-2x" style="color:blue"></p><span id="likes" class="pl-2" style="font-size:28">{{react.no_of_likes}}</span>
+                <p class="far fa-thumbs-down fa-2x" style="color:red"></p><span id="dislikes" class="pl-2" style="font-size:28">{{react.no_of_dislikes}}</span>
+              {% endfor %}
+              {% if users %}
+                <span>users</span>
+              {% endif %}
+              <button type="button" class="btn btn-danger ml-4" id="comments">Comments</button>
+          </div>
+          <hr>
+          <div class="like">
+            <span class="unlike"></span>
+            <button  class="far fa-thumbs-up fa-2x" type="button" id="upvote" ></button>
+            <span class="remove-dislike"></span>
+            <button  class="far fa-thumbs-down fa-2x" type="button" id="downvote" ></button>
+            <button type="button" class="btn btn-primary ml-4"  id="comment-btn">Leave a Comment</button>
+
+          </div>
+          <div class="vote">
+              <label for="upvote">Up-Vote</label>
+              <label for="downvote">Down-Vote</label>
+          </div>
+        </form>
 
         <!-- Comments Form -->
-        <div class="card my-4 text-center">
-          <h5 class="card-header">Leave a Comment:</h5>
+        <div class="card my-4 text-center" id="commentForm" style="display:none">
+          <h5 class="card-header">Your Comment</h5>
           <div class="card-body">
 
-            <form id="commentForm" style="margin-left:10px;">
+            <form id="KO" method="post"  style="margin-left:10px;">
               {% csrf_token %}
 
               <div class="form-group">
                 <textarea class="form-control" rows="3" id="comment" required></textarea>
-                <input type="text" id="visitor_name" placeholder="Your_Name" required>
+                <input class="text-center" type="text" id="visitor_name" placeholder="Username" required name="visitor_name">
               </div>
-              <div class="like">
-                <button  class="far fa-thumbs-up fa-2x" type="button" name="button"></button>
-                <button role="checkbox" class="far fa-thumbs-down fa-2x" type="button" name="button"></button>
-              </div>
-              <!-- <script type="text/javascript">
-              function myFunction(x) {
-                x.classList.toggle("fa-thumbs-down");
-              }
-              </script> -->
               <button type="submit" class="btn btn-primary " >Submit</button>
-
             </form>
-
-
           </div>
         </div>
         <!-- Comments Form -->
 
         <!-- Single Comment -->
-        <h3>Comments</h3>
-          <div class="media ">
+        <!-- user live comment -->
+          <!-- <div class="media ">
+
             <div class="media-body">
               <div class="livecomment" style="display:none;" id="livecomment">
+
                 <textarea name="name" rows="2.5" cols="60"  id="livecomment-text"></textarea>
                 <h5>  <span id="liveusername"></span></h5>
                 <p id="lastcomment-date"></p>
               </div>
             </div>
+          </div> -->
+          <div class="card text-center" id="livecomment" style="display:none">
+            <h6 class="card-header" >New comment</h6>
+            <div class="card-body">
+              <textarea rows="2.5" cols='75' id="livecommenttext"  readonly style="resize:none"></textarea>
+              <span>Just Now</span>
+              <h5>  <span id="liveusername"></span></h5>
+            </div>
           </div>
-          {% for comment in comments%}
-          <div class="container">
-            <div class="row col-md-4">
-              <div class="media mb-4">
-                <div class="media-body">
-                  <div class="comment">
-                    <textarea name="name" rows="2.5" cols="60" readonly >{{comment.comment}}</textarea>
-                    <h5 > Commented By: <span>{{comment.username}}</span> </h5>
-                    <span  >{{comment.published_date}}</span>
+
+
+
+          <div class="card" id="users-comments" style="display:none">
+            <h3 class="card-header">Users-Comments</h3>
+            {% for comment in comments%}
+            <div class="container "  >
+              <div class="row col-md-4">
+                <div class="media ">
+                  <div class="media-body">
+                    <h7 style="font-weight:bold"> {{comment.username}} </h7>
+                    <div class="comment">
+                      <textarea name="name" rows="2.5" cols="60" readonly >{{comment.comment}}</textarea>
+                      <span>{{comment.published_date}}</span>
+                      <hr>
+                    </div>
+                  </div>
                 </div>
               </div>
-             </div>
             </div>
+            {%endfor%}
           </div>
-          {%endfor%}
-
-        <!-- Comment with nested comments -->
-
-
-         <!-- <div class="media mb-4">
-          <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-          <div class="media-body">
-            <h5 class="mt-0">Commenter Name</h5>
-              <p></p>
-            <div class="media mt-4">
-              <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-              <div class="media-body">
-                <h5 class="mt-0">Commenter Name</h5>
-
-              </div>
-            </div>
-
-            <div class="media mt-4">
-              <img class="d-flex mr-3 rounded-circle" src="http://placehold.it/50x50" alt="">
-              <div class="media-body">
-                <h5 class="mt-0">Commenter Name</h5>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-      </div> -->
-
+          <hr>
       <!-- Sidebar Widgets Column -->
       <div class="">
-
         <!-- Search Widget -->
         <!-- <div class="card my-4">
           <h5 class="card-header">Search</h5>
@@ -196,10 +193,9 @@
             </div>
           </div>
         </div> -->
-
         <!-- Categories Widget -->
         <div class="card my-4">
-          <h5 class="card-header">Categories</h5>
+          <h5 class="card-header text-center">Categories</h5>
           <div class="card-body">
             <div class="row">
               <div class="col-lg-6">
@@ -233,7 +229,7 @@
         </div>
 
         <!-- Side Widget -->
-        <div class="card my-4">
+        <div class="card my-4 text-center">
           <h5 class="card-header">Side Widget</h5>
           <div class="card-body">
             You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
@@ -262,6 +258,8 @@
   <script src="{% static 'blog/js/post-detail.js' %}"></script>
 
 {%endfor%}
-</body>
+{%endblock%}
+{% block script %}
 
-</html>
+
+{% endblock %}

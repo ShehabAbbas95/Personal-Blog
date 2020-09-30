@@ -1,3 +1,12 @@
+/* featuerd posts  */
+
+.featured{
+  background: red
+}
+
+/* featuerd posts  */
+
+/* posts style */
 .view_post textarea{
   resize:none;
   border:none;
@@ -21,3 +30,4 @@ float:inherit;
   padding: 0px;
   min-height: 100px !important;
 }
+/* posts style */

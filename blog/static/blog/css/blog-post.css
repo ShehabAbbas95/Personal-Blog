@@ -14,43 +14,34 @@ textarea.form-control{
 
 /* comments section */
 /* comments form */
-.like button{
-  background: white;
-  border: none;
-}
 .card-body button[type=submit]{
   margin: 8px
 }
+form span .react{color: blue}
+.vote label{padding-left: 10px;cursor: pointer;}
 
-.fa-thumbs-up:focus{
-  color:  blue;
-}
-.fa-thumbs-down:focus{
-  color:  red;
-}
+#upvote, #downvote {background: white;border: none;padding-left: 20px; z-index: 99999}
+.fa-thumbs-down:before{padding-left: 20px}
+.like button:first-child{padding-right: 35px;}
+/* like .fa-thumbs-up:focus{color:  blue;}
+/* dislike .fa-thumbs-down:focus{color:  red;}*/
 /* comments form */
-
 /* users coomments */
-.comment textarea, .livecomment textarea{
+.comment{border:none; float:right;display:table-row;}
+
+.comment textarea,.card textarea{
   resize:none;
   border:none;
+  margin-top: 10px;
   font-weight:50;
   background: #ebf0f396;
   padding: 10px 10px ;
 }
-.comment h5, .livecomment h5{
-  font-size: 12px ;
-  margin-top: 5px;
-}
-
-.comment h5 span{
-  font-size: 24px;
-  max-width: 60px;
-}
-.comment > span{
-  font-size: 14px;
-  max-width: 60px;
-}
+.card h6{;max-height: 30px;line-height: 5px;text-align: center;}
+#livecomment{background: ;}
+.comment h5, .livecomment h5{font-size: 12px ;margin-top: 5px;}
+.comment h5 span{font-size: 24px;max-width: 60px}
+.comment > span{font-size: 14px;max-width: 60px;}
 /* .comment h5 {
   font-size: 10px;
   margin-left: 160px
@@ -59,3 +50,18 @@ textarea.form-control{
 
 /* users coomments */
 /* comments section */
+.btn-primary{
+  width:200px;
+}
+.blue{background:green}
+.unlike, .remove-dislike{
+  float: left;
+  display: none;
+  position: absolute;
+  z-index: 2;
+  background: green;
+  min-height: 65px;
+  min-width: 65px;
+  opacity: 0.01;
+  cursor: pointer;
+}

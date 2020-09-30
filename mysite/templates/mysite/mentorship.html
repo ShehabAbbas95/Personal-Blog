@@ -1,10 +1,12 @@
 {% extends "mysite/base.html" %}
-
+{%load static%}
 {% block title%}
   Mentoring Request
 {% endblock %}
 
 {% block body%}
+<script src="{% static 'mysite/js/main.js'%}" type="text/javascript"></script>
+
 
 <!--
 <form class="base-form"  method="POST">
@@ -60,110 +62,59 @@
   <form method="post">
     {% csrf_token %}
     <div class="form-group">
-      <label for="name">Name</label>
-      <input type="text" class="form-control" id="name" placeholder="e.g Shehab">
-      <label for="age">Age</label>
-      <input type="number" class="form-control" id="age" min="16" placeholder="16">
-      <label for="email">Email address</label>
-      <input type="email" class="form-control" id="email" placeholder="name@example.com">
-      <label for="phone">Phone</label>
-      <input type="number" class="form-control" id="phone" placeholder="phone">
-    </div>
-    <div class="form-group">
-      <label for="education">Education</label>
-      <select class="form-control" id="education">
-        <option value="Education" disabled selected>Education</option>
+      <div class="">
+        <label id="nph" class="ph" for="name">Name</label>
+        <input  id="anmph" type="text" class="form-control" name="usnm" >
+      </div>
+      <div class="">
+        <label class="ph" for="age">Age</label>
+        <input id="anmph" type="number" class="form-control"  min="16" name="age">
+      </div>
+      <div class="">
+        <label class="ph" for="email">Email address</label>
+        <input id="anmph" type="email" class="form-control" name="email" >
+      </div>
+      <div class="">
+        <label class="ph" for="phone">Phone</label>
+        <input id="anmph" type="tel" class="form-control" name="phone">
+      </div>
+      <div class="">
+      <!-- <label class="ph" for="education">Education</label> -->
+      <select class="form-control" id="education" name="education">
+        <option value="Education"  selected disabled>Education</option>
         {% for i in education%}
           <option value="{{i}}">{{i}}</option>
         {% endfor %}
       </select>
+      </div>
+      <div class="form-check form-check-inline">
+        <div class="">
+          <input class="form-check-input" type="checkbox" name="mytrack" id="mytrack" value="mytrack" onclick="my_track(this)" >
+          <label class="form-check-label" for="mytrack">Mytrack</label>
+        </div>
+        <div class="">
+          <input class="form-check-input" type="checkbox" name="other_track" id="other_track" value="other_track" onclick="another_track(this)">
+          <label class="form-check-label" for="other-track">Other-track</label>
+        </div>
+      </div>
+      <div class="">
+        <label for="exampleFormControlSelect2">Level</label>
+        <select name="level"  class="form-control" id="exampleFormControlSelect2">
+          <option value="Level" disabled selected>Level (Knowledge about this track)</option>
+          <option value="nothing">Have No Clue</option>
+          <option value="basics">Basics (What's a model , testing)</option>
+          <option value="advanced">Intermediate (Good at supevised learning)</option>
+          <option value="advanced">Advanced</option>
+          <option value="dragon">Dragon</option>
+        </select>
+      </div>
+      <div  id="describtion" style="display:none;">
+        <label for="describtion">Describtion (i.e IOT, WEB Development)</label>
+        <textarea class="form-control" name="describtion" rows="3" style="resize:none"></textarea>
+      </div>
+      <button type="submit" class="btn btn-success" name="button">Submit</button>
     </div>
 
-    <div class="form-check form-check-inline">
-      <input class="form-check-input" type="checkbox"  id="mytrack" value="mytrack" onclick="my_track(this)" >
-      <label class="form-check-label" for="mytrack">Mytrack</label>
-      <input class="form-check-input" type="checkbox"  id="other_track" value="other_track" onclick="another_track(this)">
-      <label class="form-check-label" for="other-track">Other-track</label>
-    </div>
-
-
-
-    <div class="form-group">
-      <label for="exampleFormControlSelect2">Level</label>
-      <select  class="form-control" id="exampleFormControlSelect2">
-        <option value="Level" disabled selected>Level (Knowledge about this track)</option>
-        <option value="nothing">Have No Clue</option>
-        <option value="basics">Basics (What's a model , testing)</option>
-        <option value="advanced">Intermediate (Good at supevised learning)</option>
-        <option value="advanced">Advanced</option>
-        <option value="dragon">Dragon</option>
-      </select>
-    </div>
-    <div class="form-group" id="describtion" style="display:none;">
-      <label for="describtion">Describtion (i.e IOT, WEB Development)</label>
-      <textarea class="form-control" name="describtion" rows="3"></textarea>
-    </div>
-    <button type="submit" class="btn btn-success" name="button">Submit</button>
   </form>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <script >
-
-    function my_track(checkbox){
-      if (checkbox.checked == true){
-          document.getElementById('other_track').disabled= true;
-      }
-      else{
-        document.getElementById('other_track').disabled= false;
-      }
-  };
-  function another_track (checkbox) {
-
-    if (checkbox.checked == true){
-      document.getElementById('mytrack').disabled= true;
-      document.getElementById('describtion').style.display = "block" ;
-    }
-    else{
-      document.getElementById('mytrack').disabled= false;
-      document.getElementById('describtion').style.display = "none" ;
-
-    }
-  };
-  </script>
-
-
-</form>
-
 {% endblock %}

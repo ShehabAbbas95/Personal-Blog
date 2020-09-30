@@ -1,75 +1,237 @@
 {% extends 'mysite/base.html' %}
-
 {%load static%}
-{% block title %} Blog
-
+{% block title %}
+  Blog
 {% endblock %}
 {% block body %}
 <script src="{% static 'blog/js/index.js' %}"></script>
-<link rel="stylesheet" href="{%static 'blog/css/style.css'%}">
 
-<!--Start of Posts-->
-  <div class="container text-center">
-    <div class="post_main" >
+<script>
+// websocket scripts
+// targeting the websocket
+var loc = window.location
+console.log(window.location,loc.pathname)
+var wsStart = "ws://"
+if (loc.howt == 'https:'){wsStart = 'wss://'}
+var endpoint = wsStart + loc.host + loc.pathname,
+socket = new WebSocket(endpoint),
+form = $('#zz')
+// targeting the websocket
+
+// get the data to be sent
+
+socket.onmessage = function (e) {
+  var chatholder = $('#chat-items')
+   chatholder.append(`<li>${e.data}</li>`)
+}
+socket.onopen =  function () {
+  $('#zz').click(function(e,){
+    e.preventDefault();
+    var msgText = $('#trial').val()
+    socket.send(msgText)
+
+
+  });
+  console.log('opend',)
+}
+
+socket.onerror =  function () {
+  console.log('error')
+}
+socket.onclose = function () {
+  console.log('close')
+}
+</script>
+
+
+<link rel="stylesheet" href="{% static 'blog/css/blog-home.css' %}">
+  <form id="">
+    {% csrf_token %}
+    <input type="text" id="trial" value="">
+    <input type="Submit" id="zz" value="Submit">
+
+  </form>
+
+<ul id="chat-items">
+
+</ul>
+
+<div class="container text-center">
+
+  <div class="row">
+
+    <!-- Blog Entries Column -->
+    <div class="col-md-8">
+
+      <h1 class="my-4">Page Heading
+        <small>Secondary Text</small>
+      </h1>
       {%for post in posts%}
-      <div class="view_post">
-        <p class="lead" id="{{post.post_heading}}">Topic: {{post.post_heading}}</p>
-        <textarea cols="60"  readonly id="{{post.id}}">{{post.post_text}}</textarea>
-        <a href="{% url 'detail' post.id %}">More</a>
+      <!-- Render Blog Post -->
+        <div class="card">
+          <div class="card-footer text-center">
+            <h2  style="line-height:25px" id="{{post.post_heading}}">{{post.post_heading}}</h2>
+          </div>
+          {% if post.image%}
+            <div class="text-center">
+              <img class="card-img-top" src="{{post.image.url}}" alt="{{post.post_heading}}">
+            </div>
+          {% endif %}
 
-      {%endfor%}
-
-      <!-- Adding the response from ajax to the posts-->
-        <div class="response-post" id="result" style="display:none;">
-            <p class="lead" id="response-post-topic"></p>
-            <textarea id="response-post-content"  cols="60" readonly></textarea>
-            <a id="response-postlink" href="#">More</a>
+        <div class="card-body">
+            <textarea class="card-text" rows="4" cols="80" readonly id="{{post.id}}">{{post.post_text}}</textarea>
+            <a href="{% url 'detail' post.id %}" class="btn btn-primary">Read More &rarr;</a>
+        </div>
+        <div id="date" class="card-footer text-muted ">
+          {{post.published_date}}
         </div>
       </div>
+      {%endfor%}
+      <!-- ajax response post -->
+      <div class="card" id="result" style="display:none;">
+        <div class="card-footer text-center">
+          <h2  style="line-height:25px" id="response-post-topic"></h2>
+        </div>
+      <div class="text-center">
+        {% if post.image%}
+          <img class="card-img-top" id="response-image" src="" alt="">
+        {% endif %}
+      </div>
+      <div class="card-body">
+          <textarea class="card-text" rows="4" cols="80" readonly id="response-post-content"></textarea>
+          <a id="response-postlink" href="" class="btn btn-primary">Read More &rarr;</a>
+      </div>
+      <div class="card-footer text-muted ">
+        {{post.published_date}}
+      </div>
     </div>
-<!--End of Posts-->
-<!--Start of pagination-->
-      <nav aria-label="...">
-        <ul class="pagination justify-content-center ">
-          {% if page_obj.has_previous == False %}
-            <li class="page-item">
-              <button  type="button" class="btn btn-info" onclick="more()">Check For New-Post</button>
-            </li>
-          {% endif %}
 
-          {% if page_obj.has_previous %}
-            <li class="page-item">
-              <a class="page-link" href="?page=1">First &raquo;</a>
-            </li>
-            <li class="page-item">
-              <a class="page-link" href="?page={{ page_obj.previous_page_number }}" >Previous</a>
-            </li>
-          {% endif %}
+      <!--Start of pagination-->
 
-          {% for num in page_obj.paginator.page_range %}
-            {% if page_obj.number == num %}
-              <li class="page-item active">
-                <a class="page-link" href="?page={{ num }} ">Page {{ num }} of {{ page_obj.paginator.num_pages }} <span class="sr-only">(current)</span></a>
-              </li>
-              {% elif num > page_obj.number|add:'-4' %}
-                <li class="page-item">
-                  <a class="page-link" href="?page={{ num }} "> {{ num }} </a>
+            <nav aria-label="...">
+              <ul class="pagination justify-content-center ">
+                {% if page_obj.has_previous == False %}
+                  <li class="page-item">
+                    <button  type="button" class="btn btn-info" onclick="more()">Check For New-Post</button>
+                  </li>
+                {% endif %}
+
+                {% if page_obj.has_previous %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page=1">First &raquo;</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}" >Previous</a>
+                  </li>
+                {% endif %}
+
+                {% for num in page_obj.paginator.page_range %}
+                  {% if page_obj.number == num %}
+                    <li class="page-item active">
+                      <a class="page-link" href="?page={{ num }} ">Page {{ num }} of {{ page_obj.paginator.num_pages }} <span class="sr-only">(current)</span></a>
+                    </li>
+                    {% elif num > page_obj.number|add:'-4' %}
+                      <li class="page-item">
+                        <a class="page-link" href="?page={{ num }} "> {{ num }} </a>
+                      </li>
+                  {% endif%}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
+                  </li>
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                  </li>
+                {% endif %}
+
+              </ul>
+            </nav>
+      <!--End of pagination-->
+
+
+    </div>
+
+
+    <!-- Sidebar Widgets Column -->
+    <div class="col-md-4">
+
+      <!-- Search Widget -->
+      <div class="card my-4">
+        <h5 class="card-header">Search</h5>
+        <div class="card-body">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search for...">
+            <span class="input-group-append">
+              <button class="btn btn-secondary" type="button">Go!</button>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Categories Widget -->
+      <div class="card my-4">
+        <h5 class="card-header">Categories</h5>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-6">
+              <ul class="list-unstyled mb-0">
+                <li>
+                  <a href="#">Web Design</a>
                 </li>
-            {% endif%}
-          {% endfor %}
+                <li>
+                  <a href="#">HTML</a>
+                </li>
+                <li>
+                  <a href="#">Freebies</a>
+                </li>
+              </ul>
+            </div>
+            <div class="col-lg-6">
+              <ul class="list-unstyled mb-0">
+                <li>
+                  <a href="#">JavaScript</a>
+                </li>
+                <li>
+                  <a href="#">CSS</a>
+                </li>
+                <li>
+                  <a href="#">Tutorials</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
 
-          {% if page_obj.has_next %}
-            <li class="page-item">
-              <a class="page-link" href="?page={{ page_obj.next_page_number }}">Next</a>
-            </li>
-            <li class="page-item">
-              <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-            </li>
-          {% endif %}
+      <!-- Side Widget -->
+      <div class="card my-4">
+        <h5 class="card-header">Side Widget</h5>
+        <div class="card-body">
+          You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
+        </div>
+      </div>
 
-        </ul>
-      </nav>
-<!--End of pagination-->
+    </div>
+
   </div>
-  {{form}}
-{% endblock %}
+  <!-- /.row -->
+
+</div>
+<!-- /.container -->
+
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+  <div class="container">
+    <p class="m-0 text-center text-white">Copyright &copy; Your Website 2020</p>
+  </div>
+  <!-- /.container -->
+</footer>
+
+<!-- Bootstrap core JavaScript -->
+<!--
+<script src="{% static 'blog/vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'blog/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script> -->
+
+{%endblock%}

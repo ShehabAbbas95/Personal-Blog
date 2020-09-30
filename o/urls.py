@@ -22,6 +22,5 @@ urlpatterns = [
     path('myadmin/', admin_site.urls),
     path('',include("mysite.urls")),
     path('', include("blog.urls")),
-    path('bootstrap/', include("bootstrap.urls")),
-    path('', include('post.urls')),
+    
 ]

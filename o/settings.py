@@ -25,24 +25,25 @@ SECRET_KEY = 'u7w==y@^4^%emw^9aqy3+4@*hitr82@kghp*z76e%6@0)^zw&#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
     'mysite.apps.MysiteConfig',
-    'bootstrap.apps.BootstrapConfig',
     'blog.apps.BlogConfig',
-    'post.apps.PostConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'channels',
 
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -73,7 +74,16 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'o.wsgi.application'
-
+ASGI_APPLICATION = 'o.routing.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+            # 'hosts':[os.environ.get('REDIS_URL', 'redis://localhost:6379')],
+        },
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases

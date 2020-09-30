@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.utils import timezone
+from django.db.models import F
+from django.core.exceptions import ObjectDoesNotExist
 from django.core import serializers
 from django.core.serializers.json import DjangoJSONEncoder
 from .models import *
@@ -16,7 +18,7 @@ class Posts(ListView):
     template_name = 'blog/index.html' # app//model_viewtype.html
     context_object_name= 'posts'
     ordering = ['-published_date']
-    paginate_by = 3
+    paginate_by = 5
     # def get_context_data(self, **kwargs):
     #     context = super(Posts, self).get_context_data(**kwargs)
     #     context['form'] = NameForm()
@@ -29,9 +31,20 @@ class PostDetailView(DetailView):
         context = {'post': post}
         return render(request, 'blog/post_detail.html', context)
 def detail(request,id):
-    context = {'post' : Post.objects.filter(id = id).all(),
-               'comments' : Userscomment.objects.filter(post_id = id).all()}
+    post = Post.objects.filter(id = id).all()
+    for x in post:
+        y = (json.dumps(x.categorey))
 
+
+    try:
+        reacts = (React.objects.filter(post_id = id).values())
+    except ObjectDoesNotExist:
+        reacts = 'Be the First To Like This'
+    context = {'post' : post,
+            'comments' : Userscomment.objects.filter(post_id = id).order_by('-published_date').all(),
+            'post_title': list(post.values())[0]["post_heading"],
+            'reacts': (reacts),
+            'post_categoreies':y}
     return render(request, 'blog/post-detail.html', context)
 
 # def likePost(request):
@@ -56,7 +69,7 @@ def index_ajax(request):
 #          userinfo.username= request.POST.get('lastnamevalue')
 #          userinfo.save()
 #          return HttpResponse("Success")
-def likepost(request):
+def comment(request):
     user_data = Userscomment(comment = request.POST.get('comment'),
                             username = request.POST.get('username'), post_id = request.POST.get('id'))
     user_data.save()
@@ -64,3 +77,34 @@ def likepost(request):
     lastcomment = {"comment": lastcomment[-1]["comment"],
         "username": lastcomment[-1]["username"],}
     return JsonResponse((lastcomment) ,safe=False)
+def like(request):
+    id = request.POST.get('id')
+    # these values detrmines which ajax call is going tor execut (like or dislike)
+    voting = (request.POST.get('voting'))
+    color = (request.POST.get('color'))
+    post_reacts = React.objects.filter(post_id = id).all()
+    if not post_reacts:
+        if int(voting) > 0:
+            react = React( post_id = id,no_of_likes= 1)
+        else:
+            react = React( post_id = id,no_of_dislikes=-1)
+        react.save()
+        users_reacts = {'prev_reacts':React.objects.filter(post_id = id).all()}
+        return HttpResponse('success')
+    likes =  list(post_reacts.values())[0]['no_of_likes']
+    dislikes = list(post_reacts.values())[0]['no_of_dislikes']
+    react = React.objects.get(post_id=id)
+    if int(voting) > 0:
+        react.no_of_likes = F('no_of_likes') + int(voting)
+    if int(voting) < 0 :
+        react.no_of_dislikes = F('no_of_dislikes') + int(voting)
+    if color == 'blue':
+        react.no_of_likes = F('no_of_likes') - 1
+    if  color == 'red':
+        react.no_of_dislikes = F('no_of_dislikes') + 1
+    react.save()
+
+    users_reactions = {'likes':likes,
+                   'dislikes':abs(dislikes),
+                   'color':color}
+    return JsonResponse((users_reactions) ,safe=False)
