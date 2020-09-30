@@ -144,7 +144,7 @@ def sending_mail(message):
     smtp_server = "smtp.gmail.com"
     sender_email = "shehabeldeen2019@gmail.com"
     receiver_email = "shehababbas2019@gmail.com"
-    password = "shiko3bbas"
+    password = ""
 
     context = ssl.create_default_context()
     try:
