@@ -19,11 +19,7 @@ class Posts(ListView):
     context_object_name= 'posts'
     ordering = ['-published_date']
     paginate_by = 5
-    # def get_context_data(self, **kwargs):
-    #     context = super(Posts, self).get_context_data(**kwargs)
-    #     context['form'] = NameForm()
-        # Add any other variables to the context here
-        # return context
+
 class PostDetailView(DetailView):
     model = Post
     def get(self, request, *args, **kwargs):
@@ -34,8 +30,6 @@ def detail(request,id):
     post = Post.objects.filter(id = id).all()
     for x in post:
         y = (json.dumps(x.categorey))
-
-
     try:
         reacts = (React.objects.filter(post_id = id).values())
     except ObjectDoesNotExist:
@@ -46,29 +40,13 @@ def detail(request,id):
             'reacts': (reacts),
             'post_categoreies':y}
     return render(request, 'blog/post-detail.html', context)
-
-# def likePost(request):
-#         if request.method == 'GET':
-#                post_id = request.GET['post_id']
-#                likedpost = Post.objects.get(pk=post_id) #getting the liked posts
-#                m = Like(post=likedpost) # Creating Like Object
-#                m.save()  # saving it to store in database
-#                return HttpResponse("Success!") # Sending an success response
-#         else:
-#                return HttpResponse("Request method is not a GET")
 def index_ajax(request):
     posts = list(Post.objects.order_by('published_date').values())
     new_post = {"title": posts[-1]["post_heading"],
         "text": posts[-1]["post_text"],
         "id": posts[-1]["id"],}
-
     return JsonResponse((new_post) ,safe=False)
-# def likepost(request):
-#          userinfo= Userscomment()
-#          userinfo.comment= request.POST.get('firstnamevalue')
-#          userinfo.username= request.POST.get('lastnamevalue')
-#          userinfo.save()
-#          return HttpResponse("Success")
+
 def comment(request):
     user_data = Userscomment(comment = request.POST.get('comment'),
                             username = request.POST.get('username'), post_id = request.POST.get('id'))
@@ -79,7 +57,7 @@ def comment(request):
     return JsonResponse((lastcomment) ,safe=False)
 def like(request):
     id = request.POST.get('id')
-    # these values detrmines which ajax call is going tor execut (like or dislike)
+    # these values detrmines which ajax call is going to execute (like or dislike)
     voting = (request.POST.get('voting'))
     color = (request.POST.get('color'))
     post_reacts = React.objects.filter(post_id = id).all()
@@ -103,7 +81,6 @@ def like(request):
     if  color == 'red':
         react.no_of_dislikes = F('no_of_dislikes') + 1
     react.save()
-
     users_reactions = {'likes':likes,
                    'dislikes':abs(dislikes),
                    'color':color}
