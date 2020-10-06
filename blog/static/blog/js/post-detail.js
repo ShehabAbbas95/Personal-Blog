@@ -89,7 +89,7 @@ var wsStart = "ws://"
 if (loc.howt == 'https:'){wsStart = 'wss://'}
 var endpoint = wsStart + loc.host + loc.pathname,
 socket = new WebSocket(endpoint),
-form = $('#KO')
+form = $('#comments-form')
 
 // Onopen event
 socket.onopen =  function () {

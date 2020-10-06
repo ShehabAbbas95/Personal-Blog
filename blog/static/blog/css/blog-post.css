@@ -3,6 +3,7 @@
   font-size: 32px;
   font-style: italic;
 }
+
 textarea.form-control{
   resize:none;
   margin-bottom: 8px

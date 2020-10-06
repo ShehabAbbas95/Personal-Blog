@@ -7,97 +7,46 @@
 {% block body%}
 <script src="{% static 'mysite/js/main.js'%}" type="text/javascript"></script>
 
-
-<!--
-<form class="base-form"  method="POST">
-  {% csrf_token %}
-  <h1>User Information</h1>
-  <div class="txtb">
-    <div class="form">
-      <label for="usnm"> Name</label>
-      <input type="text" name="usnm" placeholder="e.g. Shehab" >
-
-      <label for="age">Age</label>
-      <input type="number"  min="18" name="age" placeholder="18">
-      <label for="email">Email</label>
-      <input type="text" name="email" placeholder="e.g. Shehab@gmail.com" pattern="[a@ae.org]" title="name@domain.com">
-      <label for="phone">Phone</label>
-      <input type="tel" name="phone" placeholder="Phone">
-
-      <select  name="education">
-        <option value="Education" disabled selected>Education</option>
-        {% for i in education%}
-          <option value="{{i}}">{{i}}</option>
-        {% endfor %}
-      </select>
-
-
-
-        <label  for="mytrack">My Track</label>
-        <input type="checkbox" value="mytrack" name="mytrack" id="mytrack" onclick="mytracks(this)">
-
-        <div  style="display:none; color:white; margin:30px;" id="yourtrack"></div>
-
-        <label for="other_track">Custom Request</label>
-        <input type="checkbox" value="Custom_request" id="other_track" onclick="another(this)" name="other_track">
-        <label for="level">Level</label>
-        <select  name="level">
-          <option value="Level" disabled selected>Level</option>
-          <option value="nothing">Knows Nothing</option>
-          <option value="basics">Basics (What's a model , testing)</option>
-          <option value="advanced">Intermediate (Good at supevised learning)</option>
-          <option value="advanced">Advanced</option>
-          <option value="dragon">Dragon</option>
-        </select>
-        <div class="form-group">
-          <label for="other">Describtion (i.e. IOT, Web Development)</label>
-          <textarea class="form-control" id="other" rows="3"></textarea>
-        </div>
-
-        <div > <button type="submit" class="btn btn-success" ">Submit</button></div>
-      </div>
-    </div>
--->
 <div class="container">
   <form method="post">
     {% csrf_token %}
     <div class="form-group">
-      <div class="">
+      <div class="mt-4">
         <label id="nph" class="ph" for="name">Name</label>
         <input  id="anmph" type="text" class="form-control" name="usnm" >
       </div>
-      <div class="">
+      <div class="mt-4">
         <label class="ph" for="age">Age</label>
         <input id="anmph" type="number" class="form-control"  min="16" name="age">
       </div>
-      <div class="">
+      <div class="mt-4">
         <label class="ph" for="email">Email address</label>
         <input id="anmph" type="email" class="form-control" name="email" >
       </div>
-      <div class="">
+      <div class="mt-4">
         <label class="ph" for="phone">Phone</label>
         <input id="anmph" type="tel" class="form-control" name="phone">
       </div>
-      <div class="">
+      <div class="mt-4">
       <!-- <label class="ph" for="education">Education</label> -->
-      <select class="form-control" id="education" name="education">
-        <option value="Education"  selected disabled>Education</option>
-        {% for i in education%}
-          <option value="{{i}}">{{i}}</option>
-        {% endfor %}
-      </select>
+        <select class="form-control" id="education" name="education">
+          <option value="Education"  selected disabled>Education</option>
+          {% for i in education%}
+            <option value="{{i}}">{{i}}</option>
+          {% endfor %}
+        </select>
       </div>
       <div class="form-check form-check-inline">
-        <div class="">
+        <div class="mt-4">
           <input class="form-check-input" type="checkbox" name="mytrack" id="mytrack" value="mytrack" onclick="my_track(this)" >
           <label class="form-check-label" for="mytrack">Mytrack</label>
         </div>
-        <div class="">
+        <div class="mt-4 ml-4">
           <input class="form-check-input" type="checkbox" name="other_track" id="other_track" value="other_track" onclick="another_track(this)">
           <label class="form-check-label" for="other-track">Other-track</label>
         </div>
       </div>
-      <div class="">
+      <div class="mt-4">
         <label for="exampleFormControlSelect2">Level</label>
         <select name="level"  class="form-control" id="exampleFormControlSelect2">
           <option value="Level" disabled selected>Level (Knowledge about this track)</option>
@@ -108,7 +57,7 @@
           <option value="dragon">Dragon</option>
         </select>
       </div>
-      <div  id="describtion" style="display:none;">
+      <div class="mb-4"  id="describtion" style="display:none;">
         <label for="describtion">Describtion (i.e IOT, WEB Development)</label>
         <textarea class="form-control" name="describtion" rows="3" style="resize:none"></textarea>
       </div>

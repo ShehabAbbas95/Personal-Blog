@@ -1,14 +1,17 @@
 from django.db import models
+from multiselectfield import MultiSelectField
+class Categoreies(models.Model):
+    category_name = models.CharField(max_length=200)
+    def __str__(self):
+        return self.category_name
 
-# Create your models here.
 class Post(models.Model):
             post_heading = models.CharField(max_length=200)
-            categorey = models.TextField(default=None,null=True)
             post_text = models.TextField()
             published_date = models.DateTimeField(auto_now=True)
             id = models.AutoField(primary_key=True)
             image = models.ImageField(upload_to='images/',blank=True)
-
+            category = models.ManyToManyField(Categoreies,blank=True)
             def __str__(self):
                  return (self.post_heading)
 class React(models.Model):

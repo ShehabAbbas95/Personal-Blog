@@ -11,4 +11,5 @@ admin_site = MyAdminSite(name='myadmin')
 
 admin_site.register(Post)
 admin_site.register(React)
+admin_site.register(Categoreies)
 admin_site.register(Userscomment)

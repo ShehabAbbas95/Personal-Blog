@@ -4,7 +4,7 @@
   {{post_title}}
 {% endblock %}
 {% block body %}
-  {% for post in post%}
+  {% for post in post_detail%}
 
 
   <!-- Bootstrap core CSS -->
@@ -14,51 +14,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <!-- Custom styles for this template -->
   <link rel="stylesheet" href="{% static 'blog/css/blog-post.css' %}">
-  <!-- Add icon library -->
-
-
 
 <div class="container">
-
-  {% for cat in post_categoreies%}
-    {{cat}}
-  {%endfor%}
-  <!-- Navigation -->
-  <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
-    <div class="container">
-      <a class="navbar-brand" href="#">Blog</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="#">Home
-              <span class="sr-only">(current)</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Services</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Contact</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav> -->
-
-  <!-- Page Content -->
-
-
     <div class="row">
-
       <!-- Post Content Column -->
       <div class="col-lg-8">
-
         <!-- Title -->
         <h1 class="mt-4" id="{{post.id}}">{{post.post_heading}}</h1>
         <span id="post_id" style="display:none">{{post.id}}</span>
@@ -67,31 +27,39 @@
           by
           <a>Eng.Omar</a>
         </p>
-
         <hr>
-
         <!-- Date/Time -->
         <p>Posted on {{post.published_date}}</p>
-
         <hr>
-
         <!-- Preview Image -->
+        {% if post.image %}
         <img class="img-fluid rounded" src="{{post.image.url}}" alt="">
-
+        {% endif %}
         <hr>
-
         <!-- Post Content -->
         <p class="lead">{{post.post_text}}</p>
-
         <blockquote class="blockquote">
           <footer class="blockquote-footer">
             <cite title="Source Title">References</cite>
           </footer>
         </blockquote>
         <hr>
-        <!-- buttons for commenting or show comments -->
+        <!-- current user reaction -->
+        <form>
+          <div class="vote">
+            <div class="like">
+              <span class="unlike"></span>
+              <button  class="far fa-thumbs-up fa-2x" type="button" id="upvote" ></button>
+              <span class="remove-dislike"></span>
+              <button  class="far fa-thumbs-down fa-2x" type="button" id="downvote" ></button>
+              <button type="button" class="btn btn-primary ml-4"  id="comment-btn">Leave a Comment</button>
 
-        <form >
+            </div>
+              <label for="upvote">Up-Vote</label>
+              <label for="downvote">Down-Vote</label>
+          </div>
+          <hr>
+          <!-- users previous reacts -->
           <div class="ml-3 mb-1">
               {% for react in reacts%}
                 <p  class="far fa-thumbs-up fa-2x" style="color:blue"></p><span id="likes" class="pl-2" style="font-size:28">{{react.no_of_likes}}</span>
@@ -100,21 +68,10 @@
               {% if users %}
                 <span>users</span>
               {% endif %}
+              <!-- buttons for commenting or show comments -->
               <button type="button" class="btn btn-danger ml-4" id="comments">Comments</button>
           </div>
           <hr>
-          <div class="like">
-            <span class="unlike"></span>
-            <button  class="far fa-thumbs-up fa-2x" type="button" id="upvote" ></button>
-            <span class="remove-dislike"></span>
-            <button  class="far fa-thumbs-down fa-2x" type="button" id="downvote" ></button>
-            <button type="button" class="btn btn-primary ml-4"  id="comment-btn">Leave a Comment</button>
-
-          </div>
-          <div class="vote">
-              <label for="upvote">Up-Vote</label>
-              <label for="downvote">Down-Vote</label>
-          </div>
         </form>
 
         <!-- Comments Form -->
@@ -122,7 +79,7 @@
           <h5 class="card-header">Your Comment</h5>
           <div class="card-body">
 
-            <form id="KO" method="post"  style="margin-left:10px;">
+            <form id="comments-form" method="post"  style="margin-left:10px;">
               {% csrf_token %}
 
               <div class="form-group">
@@ -132,22 +89,8 @@
               <button type="submit" class="btn btn-primary " >Submit</button>
             </form>
           </div>
+          <!-- current user comment -->
         </div>
-        <!-- Comments Form -->
-
-        <!-- Single Comment -->
-        <!-- user live comment -->
-          <!-- <div class="media ">
-
-            <div class="media-body">
-              <div class="livecomment" style="display:none;" id="livecomment">
-
-                <textarea name="name" rows="2.5" cols="60"  id="livecomment-text"></textarea>
-                <h5>  <span id="liveusername"></span></h5>
-                <p id="lastcomment-date"></p>
-              </div>
-            </div>
-          </div> -->
           <div class="card text-center" id="livecomment" style="display:none">
             <h6 class="card-header" >New comment</h6>
             <div class="card-body">
@@ -156,9 +99,7 @@
               <h5>  <span id="liveusername"></span></h5>
             </div>
           </div>
-
-
-
+          <!-- Previous Users comments -->
           <div class="card" id="users-comments" style="display:none">
             <h3 class="card-header">Users-Comments</h3>
             {% for comment in comments%}
@@ -198,36 +139,20 @@
           <h5 class="card-header text-center">Categories</h5>
           <div class="card-body">
             <div class="row">
-              <div class="col-lg-6">
-                <ul class="list-unstyled mb-0">
+              <div class="col-lg-12">
+                <ul class="list-unstyled mb-0 text-center">
+                {% for category in post.category.all%}
+                {%if category%}
                   <li>
-                    <a href="#">Web Design</a>
+                    <a href="{%url 'categorize' category%}">{{category}}</a>
                   </li>
-                  <li>
-                    <a href="#">HTML</a>
-                  </li>
-                  <li>
-                    <a href="#">Freebies</a>
-                  </li>
-                </ul>
-              </div>
-              <div class="col-lg-6">
-                <ul class="list-unstyled mb-0">
-                  <li>
-                    <a href="#">JavaScript</a>
-                  </li>
-                  <li>
-                    <a href="#">CSS</a>
-                  </li>
-                  <li>
-                    <a href="#">Tutorials</a>
-                  </li>
+                {%endif%}
+                {%endfor%}
                 </ul>
               </div>
             </div>
           </div>
         </div>
-
         <!-- Side Widget -->
         <div class="card my-4 text-center">
           <h5 class="card-header">Side Widget</h5>
@@ -235,15 +160,11 @@
             You can put anything you want inside of these side widgets. They are easy to use, and feature the new Bootstrap 4 card containers!
           </div>
         </div>
-
       </div>
-
     </div>
     <!-- /.row -->
-
   </div>
   <!-- /.container -->
-
   <!-- Footer -->
   <footer class="py-5 bg-dark">
     <div class="container">
@@ -259,7 +180,3 @@
 
 {%endfor%}
 {%endblock%}
-{% block script %}
-
-
-{% endblock %}

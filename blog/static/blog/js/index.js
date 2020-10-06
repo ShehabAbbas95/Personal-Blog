@@ -1,3 +1,11 @@
+$(function(){
+  $('#categories').on('click',function(){
+    $('#category').toggle();
+  });
+})
+
+
+
 function more(){
    $.ajax({
      url: '/blog/index_ajax',
@@ -38,10 +46,9 @@ function more(){
      });
 };
 
-
 $(function(){
   'use strict';
-  $('#x').style({"background":"red"})
+  $('#x').style({"background":"blue"})
   // adjust slider height
   var winh = $(window).height(),
    nav = $('.navbar').innerHeight();
